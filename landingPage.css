@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --purple: #6b4fa0;
+  --purple-dark: #3b2560;
+  --green-neon: #7fff00;
+  --teal: #00e5c0;
+  --ui-line: rgba(180,220,255,0.25);
+  --text: #f0eeff;
+  --navbar-color: rgba(188, 188, 188, 0.163);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #1a0a2e;
+  color: var(--text);
+  overflow: hidden; /* Locks scrolling since it's only one section now */
+}
+
+/* ── HUD OVERLAY UI ── */
+.user-interface {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none; /* Allows you to click the website behind the UI */
+}
+
+.user-interface .ui-container {
+    width: 95%;
+    height: 95%;
+    border: 0.1vw solid var(--navbar-color);
+    border-radius: 1vw;
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.user-interface .navbar {
+    height: 7.5%;
+    width: 100%;
+    border-bottom: 0.1vw solid var(--navbar-color);
+    gap: 2vw;
+    position: absolute;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    background: transparent; 
+    backdrop-filter: blur(1px); 
+    pointer-events: auto; /* Makes the navbar clickable again */
+}
+
+.user-interface .navbar .button {
+    height: 100%;
+    width: auto;
+    color: var(--navbar-color);
+    position: relative;
+    align-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px;
+    transition: color 0.2s;
+}
+
+.user-interface .navbar .button:hover {
+    color: var(--teal);
+}
+
+.user-interface .sidebar {
+    height: 100%;
+    width: 5%;
+    border-right: 0.1vw solid var(--navbar-color);
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 100;
+    background: transparent;
+    backdrop-filter: blur(1px); 
+    pointer-events: auto; /* Makes the sidebar clickable again */
+}
+
+.user-interface .sidebar .menu {
+    height: 7.5%;
+    width: 100%;
+    border-right: 0.1vw solid var(--navbar-color);
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navbar-color);
+    cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.user-interface .sidebar .menu:hover {
+    height: 7.5%;
+    width: 100%;
+    border: 0.1vw solid var(--teal);
+    color: var(--teal);
+    border-top-left-radius: 1vw;
+}
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Background Image */
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('DJIANG.png');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+}
+
+/* Animated particles / scan lines */
+.hero-scanlines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+}
+
+/* Canvas for animated character silhouette */
+#heroCanvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+
+/* UI corner decorations */
+.ui-corner {
+  position: absolute;
+  width: 30px; height: 30px;
+  border-color: var(--teal);
+  border-style: solid;
+  opacity: .6;
+}
+.ui-corner.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+.ui-corner.tr { top: 10px; right: 25px; border-width: 2px 2px 0 0; }
+.ui-corner.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
+.ui-corner.br { bottom: 10px; right: 25px; border-width: 0 2px 2px 0; }
+
+/* Crosshair left */
+.ui-crosshair {
+  position: absolute;
+  left: 22px; top: 50%;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  opacity: .5;
+}
+.ui-crosshair::before, .ui-crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--teal);
+}
+.ui-crosshair::before { width: 2px; height: 100%; left: 50%; transform: translateX(-50%); }
+.ui-crosshair::after  { height: 2px; width: 100%; top: 50%; transform: translateY(-50%); }
+
+/* Counter labels */
+.ui-counter {
+  position: absolute;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  color: var(--teal);
+  opacity: .6;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.ui-counter.c1 { top: 170px; left: 380px; }
+.ui-counter.c2 { top: 310px; left: 620px; }
+.ui-counter.c3 { top: 470px; left: 200px; }
+
+/* Brand blurb top-left */
+.hero-blurb {
+  position: absolute;
+  top: 90px; 
+  left: 9vw; 
+  max-width: 280px;
+  font-size: 10px; 
+  line-height: 1.6;
+  color: #fff; 
+  letter-spacing: .5px;
+  z-index: 20;
+}
+
+/* Giant headline */
+.hero-headline {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1200px;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+}
+
+.hero-headline .line {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 0.75; 
+  letter-spacing: -2px;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.9); 
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideUp .7s forwards;
+}
+
+.hero-headline .line:nth-child(1) { 
+  font-size: clamp(90px, 14vw, 180px); 
+  margin-left: 20%; 
+  animation-delay: .1s; 
+}
+.hero-headline .line:nth-child(2) { 
+  font-size: clamp(110px, 16vw, 210px); 
+  margin-left: 40%; 
+  animation-delay: .25s; 
+}
+.hero-headline .line:nth-child(3) { 
+  font-size: clamp(130px, 18vw, 250px); 
+  margin-left: 5%; 
+  animation-delay: .4s; 
+}
+
+@keyframes slideUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 30px; right: 65px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; opacity: .55;
+}
+.scroll-hint svg { animation: bounce .9s ease-in-out infinite alternate; }
+@keyframes bounce { to { transform: translateY(5px); } }
+
+/* Camera bottom-left */
+.ui-camera {
+  position: absolute;
+  bottom: 16px; left: 22px;
+  width: 22px; height: 16px;
+  border: 1.5px solid var(--teal);
+  border-radius: 2px;
+  opacity: .5;
+}
+.ui-camera::before {
+  content: ''; position: absolute;
+  right: -7px; top: 50%; transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left: 6px solid var(--teal);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-blurb { display: none; }
+}

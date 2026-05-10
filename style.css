@@ -1,0 +1,158 @@
+@font-face {
+    font-family: 'HarmonyOS Sans Black';
+    src: url('HarmonyOS_Sans_Black.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #7E807C;
+    margin: 0;
+    font-family: 'HarmonyOS Sans Black', sans-serif;
+}
+
+
+.logo-container {
+    padding: 30px 0 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.logo-container img {
+    width: 60%;
+    height: auto;
+    max-width: 100px;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffcc00; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+nav.navbar {
+    background-color: #313739;
+    color: white;
+    width: 15vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+nav.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav.navbar ul li.navbutton {
+    padding: 15px 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+    border-radius: 8px;
+    width: 80%;
+}
+
+
+nav.navbar ul li.active-navbutton {
+    font-family: 'HarmonyOS Sans Black', sans-serif;
+    font-weight: bold;
+    background-color: #3d4446; 
+    padding: 15px 10px;
+    margin: 5px 0;
+    width: 85%;
+    color: #ffcc00; /* Optional: turn text yellow too */
+    border-left: 5px solid #ffcc00; /* The yellow bar on the left */
+    border-top-left-radius: 2px; /* Flatten left corners to align with border */
+    border-bottom-left-radius: 2px;
+    
+    /* This adds a subtle yellow glow/tint from the left */
+    background: linear-gradient(to right, rgba(255, 204, 0, 0.15), transparent);
+}
+
+
+nav.navbar ul li.navbutton:hover {
+    background-color: #4a5153;
+}
+
+
+main {
+    margin-left: 15%; 
+    padding: 40px;
+    color: #333;
+}
+
+
+
+.mobile-header {
+    display: none;
+    background: #313739;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.hamburger {
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 5px;
+}
+
+
+@media (max-width: 768px) {
+    .mobile-header {
+        display: flex; /* Show top bar on mobile */
+    }
+
+    nav.navbar {
+        width: 100%;
+        height: auto;
+        top: 55px; /* Sits right under the mobile header */
+        left: 0;
+        display: none; /* Hidden until toggled */
+        background-color: #313739;
+    }
+
+    nav.navbar.show-menu {
+        display: block; /* Shows when JS toggles class */
+    }
+
+    nav.navbar .logo-container {
+        display: none; /* Hide sidebar logo on mobile to avoid duplicates */
+    }
+
+    main {
+        margin-left: 0;
+        padding-top: 80px; /* Space for fixed header */
+    }
+
+    nav.navbar ul {
+        padding: 20px 0;
+    }
+}
